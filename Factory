@@ -1,0 +1,61 @@
+using System;
+
+public abstract class Enemy
+{
+    public abstract string Faction { get; }
+    public abstract int Health { get; set; }
+    public abstract int AttackPower { get; }
+
+    public abstract void Attack();
+}
+
+public class Sentinel : Enemy
+{
+    public override string Faction => "Sentinel";
+    public override int Health { get; set; } = 100;
+    public override int AttackPower => 15;
+
+    public override void Attack()
+    {
+        Console.WriteLine("Sentinel attacks with military precision!");
+    }
+}
+
+public class Wolf : Enemy
+{
+    public override string Faction => "Wolves";
+    public override int Health { get; set; } = 150;
+    public override int AttackPower => 25;
+
+    public override void Attack()
+    {
+        Console.WriteLine("Wolf strikes swiftly and accurately!");
+    }
+}
+
+public class Drone : Enemy
+{
+    public override string Faction => "Drone";
+    public override int Health { get; set; } = 50;
+    public override int AttackPower => 10;
+
+    public override void Attack()
+    {
+        Console.WriteLine("Drone launches an aerial attack!");
+    }
+}
+
+// Factory class for creating enemies
+public static class EnemyFactory
+{
+    public static Enemy CreateEnemy(string enemyType)
+    {
+        return enemyType.ToLower() switch
+        {
+            "sentinel" => new Sentinel(),
+            "wolf" => new Wolf(),
+            "drone" => new Drone(),
+            _ => throw new ArgumentException("Unknown enemy type")
+        };
+    }
+}
